@@ -5,10 +5,10 @@
 
 #define CONNECT_RETRIES 20
 
-char ssid[] = "SHAW-608330";
-char pass[] = "251169015919";
+char ssid[] = ""; // set the ssid for your wifi network
+char pass[] = ""; // set the password for your wifi network
 
-char apiKey[] = "jA5SQ9953e6dRUC4FBCGNTLakUgMIjPexJHXZkp2kWc4MC7Kk90IAEqWd3HQieYA";
+char apiKey[] = ""; // set your API key
 int fieldId = 3;
 
 int status = WL_IDLE_STATUS;
@@ -52,7 +52,7 @@ void loop() {
 
 void example() {  
     // Add single value
-    long rc = Trackr::addSingleValue(3, 100, apiKey);
+    int rc = Trackr::addSingleValue(3, 100, apiKey);
 
     Serial.println("HTTP response code: " + rc);
     

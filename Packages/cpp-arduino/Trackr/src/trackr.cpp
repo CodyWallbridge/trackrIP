@@ -57,6 +57,7 @@ Trackr::TrackrValuesResponse* Trackr::getValues(int fieldId, int offset, int lim
     std::string opts = "?fieldId=" + std::to_string(fieldId) + "&offset=" + std::to_string(offset) + "&limit=" + std::to_string(limit) + "&order=" + (descending ? "desc" : "asc") + "&apiKey=" + key;
     
     http.begin((Trackr::apiUrl + "/api/values" + opts).c_str());
+    http.setFollowRedirects(HTTPC_FORCE_FOLLOW_REDIRECTS);
     int http_code = http.GET();
     
     if (http_code == 200) {
@@ -74,7 +75,7 @@ Trackr::TrackrValuesResponse* Trackr::getValues(int fieldId, int offset, int lim
     return nullptr;
 }
 
-long Trackr::addSingleValue(int fieldId, int value, std::string key) {
+int Trackr::addSingleValue(int fieldId, int value, std::string key) {
     HTTPClient http;
 
     // wait until current time is at least 1s after last call
@@ -85,7 +86,8 @@ long Trackr::addSingleValue(int fieldId, int value, std::string key) {
     
     std::string opts = "fieldId=" + std::to_string(fieldId) + "&value=" + std::to_string(value) + "&apiKey=" + key;
     
-    http.begin((Trackr::apiUrl + "/api/values").c_str());
+    http.begin((Trackr::apiUrl + "/api/values/").c_str());
+    http.setFollowRedirects(HTTPC_FORCE_FOLLOW_REDIRECTS);
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     int http_code = http.POST(opts.c_str());
 
@@ -95,8 +97,8 @@ long Trackr::addSingleValue(int fieldId, int value, std::string key) {
 }
 
 
-long Trackr::addMultipleValues(int fieldId, std::list<int> values, std::string key) {
-    long rc;
+int Trackr::addMultipleValues(int fieldId, std::list<int> values, std::string key) {
+    int rc;
 
     for (int i : values) {
         rc = Trackr::addSingleValue(fieldId, i, key);

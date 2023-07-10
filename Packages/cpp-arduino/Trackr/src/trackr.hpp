@@ -28,6 +28,6 @@ namespace Trackr {
     void setApiUrl(std::string);
 
     Trackr::TrackrValuesResponse* getValues(int, int, int, bool, std::string key = Trackr::apiKey);
-    long addSingleValue(int, int, std::string key = Trackr::apiKey);
-    long addMultipleValues(int, std::list<int>, std::string key = Trackr::apiKey);
+    int addSingleValue(int, int, std::string key = Trackr::apiKey);
+    int addMultipleValues(int, std::list<int>, std::string key = Trackr::apiKey);
 }
